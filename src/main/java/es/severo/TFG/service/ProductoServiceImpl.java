@@ -62,22 +62,28 @@ public class ProductoServiceImpl implements  ProductoService{
     }
 
     @Override
-    public Optional<Producto> updateProducto(Long id, Producto producto, Long categoriaId, Long tamanoId) {
+    public Optional<Producto> updateProducto(Long id, Producto nuevosDatos, Long categoriaId, Long tamanoId) {
         Optional<Producto> opProducto = productoRepository.findById(id);
         Optional<Tamano> opTamano = tamanoRepository.findById(tamanoId);
 
         if (opProducto.isPresent() && opTamano.isPresent()) {
-            producto = opProducto.get();
-            producto.setTamano(opTamano.get());
+            Producto productoExistente = opProducto.get();
+
+            productoExistente.setNombre(nuevosDatos.getNombre());
+            productoExistente.setImagen(nuevosDatos.getImagen());
+            productoExistente.setPrecioBase(nuevosDatos.getPrecioBase());
+
+            productoExistente.setTamano(opTamano.get());
 
             if (categoriaId != null && categoriaId > 0) {
-                categoriaRepository.findById(categoriaId).ifPresent(producto::setCategoria);
+                categoriaRepository.findById(categoriaId).ifPresent(productoExistente::setCategoria);
             } else {
-                producto.setCategoria(null);
+                productoExistente.setCategoria(null);
             }
 
-            return Optional.of(productoRepository.save(producto));
+            return Optional.of(productoRepository.save(productoExistente));
         }
+
         return Optional.empty();
     }
 }
