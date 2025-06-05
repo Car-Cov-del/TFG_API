@@ -7,28 +7,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "usuarios")
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
 
-    @Column(name="imagen")
-    private String imagen;
+    @Column(name = "contrasena", nullable = false)
+    private String contrasena;
 
-    @OneToMany(mappedBy = "categoria")
+    @Column(name = "rol", nullable = false)
+    private String rol;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id", nullable = false)
     @JsonIgnore
-    private Set<Producto> productos = new HashSet<>();
+    private Restaurante restaurante;
 }

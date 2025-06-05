@@ -1,7 +1,5 @@
 package es.severo.TFG.service;
 
-import es.severo.TFG.entities.Categoria;
-import es.severo.TFG.entities.Menu;
 import es.severo.TFG.entities.Producto;
 import es.severo.TFG.entities.Tamano;
 import es.severo.TFG.repository.CategoriaRepository;

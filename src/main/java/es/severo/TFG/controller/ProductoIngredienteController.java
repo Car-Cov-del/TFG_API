@@ -1,6 +1,5 @@
 package es.severo.TFG.controller;
 
-import es.severo.TFG.entities.MenuPedido;
 import es.severo.TFG.entities.ProductoIngrediente;
 import es.severo.TFG.entities.ProductoIngredienteId;
 import es.severo.TFG.service.ProductoIngredienteService;

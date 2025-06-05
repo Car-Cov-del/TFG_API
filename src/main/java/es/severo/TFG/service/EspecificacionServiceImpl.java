@@ -1,7 +1,6 @@
 package es.severo.TFG.service;
 
 import es.severo.TFG.entities.*;
-import es.severo.TFG.repository.EspecificacionMenuRepository;
 import es.severo.TFG.repository.EspecificacionRepository;
 import es.severo.TFG.repository.IngredienteRepository;
 import es.severo.TFG.repository.PedidoProductoRepository;
@@ -15,24 +14,20 @@ public class EspecificacionServiceImpl implements EspecificacionService{
     private final EspecificacionRepository especificacionRepository;
     private final IngredienteRepository ingredienteRepository;
     private final PedidoProductoRepository pedidoProductoRepository;
-    private final EspecificacionMenuRepository especificacionMenuRepository;
 
-    public EspecificacionServiceImpl(EspecificacionRepository especificacionRepository, IngredienteRepository ingredienteRepository, PedidoProductoRepository pedidoProductoRepository, EspecificacionMenuRepository especificacionMenuRepository) {
+    public EspecificacionServiceImpl(EspecificacionRepository especificacionRepository, IngredienteRepository ingredienteRepository, PedidoProductoRepository pedidoProductoRepository) {
         this.especificacionRepository = especificacionRepository;
         this.ingredienteRepository = ingredienteRepository;
         this.pedidoProductoRepository = pedidoProductoRepository;
-        this.especificacionMenuRepository = especificacionMenuRepository;
     }
 
     @Override
     public Optional<Especificacion> createEspecificacion(Especificacion especificacion, Long ingredienteId, Long productoPedidoId, Long especificacionMenuId) {
         Optional<Ingrediente> opIngrediente = ingredienteRepository.findById(ingredienteId);
         Optional<PedidoProducto> opPedidoProducto = pedidoProductoRepository.findById(productoPedidoId);
-        Optional<EspecificacionMenu> opEspecificacionMenu = especificacionMenuRepository.findById(especificacionMenuId);
-        if(opIngrediente.isPresent() && (opPedidoProducto.isPresent() || opEspecificacionMenu.isPresent())){
+        if(opIngrediente.isPresent() && (opPedidoProducto.isPresent())){
             especificacion.setIngrediente(opIngrediente.get());
             opPedidoProducto.ifPresent(especificacion::setPedidoProducto);
-            opEspecificacionMenu.ifPresent(especificacion::setPedidoMenuProducto);
             return Optional.of(especificacionRepository.save(especificacion));
         }
         return Optional.empty();
@@ -58,13 +53,11 @@ public class EspecificacionServiceImpl implements EspecificacionService{
         Optional<Especificacion> opEspecificacion = especificacionRepository.findById(id);
         Optional<Ingrediente> opIngrediente = ingredienteRepository.findById(ingredienteId);
         Optional<PedidoProducto> opPedidoProducto = pedidoProductoRepository.findById(productoPedidoId);
-        Optional<EspecificacionMenu> opEspecificacionMenu = especificacionMenuRepository.findById(especificacionMenuId);
-        if(opEspecificacion.isPresent() && opIngrediente.isPresent() && (opPedidoProducto.isPresent() || opEspecificacionMenu.isPresent())){
+        if(opEspecificacion.isPresent() && opIngrediente.isPresent() && (opPedidoProducto.isPresent())){
             opEspecificacion.get().setAccion(especificacion.getAccion());
             opEspecificacion.get().setPrecioExtra(especificacion.getPrecioExtra());
             opEspecificacion.get().setIngrediente(opIngrediente.get());
             opPedidoProducto.ifPresent(opEspecificacion.get()::setPedidoProducto);
-            opEspecificacionMenu.ifPresent(opEspecificacion.get()::setPedidoMenuProducto);
             return Optional.of(especificacionRepository.save(opEspecificacion.get()));
         }
         return Optional.empty();

@@ -46,8 +46,4 @@ public class Producto {
     @OneToMany(mappedBy = "producto")
     @JsonIgnore
     private Set<PedidoProducto> pedidos = new HashSet<>();
-
-    @OneToMany(mappedBy = "producto")
-    @JsonIgnore
-    private Set<EspecificacionMenu> pedidosMenu = new HashSet<>();
 }

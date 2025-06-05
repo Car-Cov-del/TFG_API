@@ -1,6 +1,5 @@
 package es.severo.TFG.controller;
 
-import es.severo.TFG.entities.MenuPedido;
 import es.severo.TFG.entities.PedidoProducto;
 import es.severo.TFG.service.PedidoProductoService;
 import org.springframework.http.HttpStatus;

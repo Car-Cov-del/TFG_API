@@ -70,7 +70,6 @@ public class ProductoIngredienteServiceImpl implements ProductoIngredienteServic
             ProductoIngrediente pi = opt.get();
             pi.setPrecioExtra(data.getPrecioExtra());
             pi.setObligatorio(data.getObligatorio());
-            pi.setPorDefecto(data.getPorDefecto());
             return Optional.of(repository.save(pi));
         }
 
@@ -96,7 +95,6 @@ public class ProductoIngredienteServiceImpl implements ProductoIngredienteServic
             ProductoIngrediente pi = opt.get();
             pi.setPrecioExtra(data.getPrecioExtra());
             pi.setObligatorio(data.getObligatorio());
-            pi.setPorDefecto(data.getPorDefecto());
             return Optional.of(repository.save(pi));
         }
 

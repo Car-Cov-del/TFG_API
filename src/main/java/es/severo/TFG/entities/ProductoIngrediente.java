@@ -33,9 +33,6 @@ public class ProductoIngrediente {
     @Column(name="precio_extra", nullable = false)
     private Double precioExtra;
 
-    @Column(name="por_defecto", nullable = false)
-    private Boolean porDefecto;
-
     @Column(name="obligatorio", nullable = false)
     private Boolean obligatorio;
 
