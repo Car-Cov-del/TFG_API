@@ -31,7 +31,7 @@ public class Especificacion {
     private PedidoProducto pedidoProducto;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_menu_producto_id", nullable = false)
+    @JoinColumn(name = "pedido_menu_producto_id")
     @JsonIgnore
     private EspecificacionMenu pedidoMenuProducto;
 
