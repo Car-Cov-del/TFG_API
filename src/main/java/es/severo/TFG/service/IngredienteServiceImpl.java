@@ -33,7 +33,7 @@ public class IngredienteServiceImpl implements IngredienteService{
         Ingrediente ingrediente = new Ingrediente();
         ingrediente.setNombre(dto.getNombre());
         ingrediente.setImagen(dto.getImagen());
-
+        ingrediente.setEsAnadible(dto.getEsAnadible());
         Set<Alergeno> alergenos = new HashSet<>(alergenoRepository.findAllById(dto.getAlergenoIds()));
         ingrediente.setAlergenos(alergenos);
 
@@ -60,6 +60,7 @@ public class IngredienteServiceImpl implements IngredienteService{
     public Optional<Ingrediente> updateIngrediente(Long id, IngredienteDTO dto) {
         return ingredienteRepository.findById(id).map(existing -> {
             existing.setNombre(dto.getNombre());
+            existing.setEsAnadible(dto.getEsAnadible());
             if (dto.getImagen() != null && !dto.getImagen().isEmpty()) {
                 existing.setImagen(dto.getImagen());
             }

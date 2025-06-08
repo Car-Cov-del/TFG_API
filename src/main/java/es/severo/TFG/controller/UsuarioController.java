@@ -2,7 +2,6 @@ package es.severo.TFG.controller;
 
 import es.severo.TFG.entities.Usuario;
 import es.severo.TFG.service.UsuarioService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,38 +11,44 @@ import java.util.List;
 @RequestMapping("/TFG/usuarios")
 public class UsuarioController {
 
-    private final UsuarioService service;
 
-    public UsuarioController(UsuarioService service) {
-        this.service = service;
-    }
+    private final UsuarioService usuarioService;
 
-    @PostMapping
-    public ResponseEntity<Usuario> crear(@RequestBody Usuario usuario, @RequestParam Long restauranteId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.createUsuario(usuario, restauranteId));
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
-    public List<Usuario> listar() {
-        return service.getAllUsuarios();
+    public List<Usuario> getAll() {
+        return usuarioService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obtener(@PathVariable Long id) {
-        return service.getUsuarioById(id)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id);
+        return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public Usuario create(@RequestBody Usuario usuario) {
+        return usuarioService.save(usuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizar(@PathVariable Long id,
-                                              @RequestBody Usuario usuario,
-                                              @RequestParam(required = false) Long restauranteId) {
-        return ResponseEntity.ok(service.updateUsuario(id, usuario, restauranteId));
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario existente = usuarioService.findById(id);
+        if (existente == null) return ResponseEntity.notFound().build();
+        usuario.setId(id);
+        return ResponseEntity.ok(usuarioService.save(usuario));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        service.deleteUsuario(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            usuarioService.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 }

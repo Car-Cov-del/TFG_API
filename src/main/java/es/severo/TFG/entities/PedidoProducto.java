@@ -25,7 +25,6 @@ public class PedidoProducto {
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
-    @JsonIgnore
     private Producto producto;
 
     @ManyToOne
@@ -36,8 +35,7 @@ public class PedidoProducto {
     @Column(name="cantidad", nullable = false)
     private Integer cantidad;
 
-    @OneToMany(mappedBy = "pedidoProducto")
-    @JsonIgnore
+    @OneToMany(mappedBy = "pedidoProducto", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Especificacion> especificaciones = new HashSet<>();
 
 }

@@ -1,12 +1,15 @@
 package es.severo.TFG.controller;
 
 import es.severo.TFG.entities.Pedido;
+import es.severo.TFG.entities.Producto;
+import es.severo.TFG.repository.PedidoProductoRepository;
 import es.severo.TFG.service.PedidoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -15,18 +18,20 @@ public class PedidoController {
 
     private final PedidoService service;
 
-    public PedidoController(PedidoService service) {
+    public PedidoController(PedidoService service, PedidoProductoRepository pedidoProductoRepository) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody Pedido pedido, @RequestParam Long mesaId) {
-        Optional<Pedido> r = service.createPedido(pedido, mesaId);
-        if (r.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(r.get());
+    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido,
+                                         @RequestParam(required = false) Long mesaId) {
+        Optional<Pedido> result = service.createPedido(pedido, mesaId);
+        if (result.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(result.get());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo crear el pedido");
     }
+
 
     @GetMapping
     public List<Pedido> listar() {
@@ -58,5 +63,25 @@ public class PedidoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Endpoint para conseguir los productos mas vendidos
+    @GetMapping("/top")
+    public ResponseEntity<List<Producto>> getTopProductos() {
+        return ResponseEntity.ok(service.getTopProductos());
+    }
+
+    // Endpoint para enviar el pedido según su tipo y actualizar estado
+    @PutMapping("/{id}/enviar")
+    public ResponseEntity<String> enviarPedido(@PathVariable Long id) {
+        boolean enviado = service.enviarPedido(id);
+
+        if (!enviado) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Pedido no encontrado o tipo inválido.");
+        }
+
+        return ResponseEntity.ok("Pedido enviado/entregado correctamente.");
+    }
+
 }
 

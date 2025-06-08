@@ -39,6 +39,8 @@ public class RestauranteServiceImpl implements RestauranteService {
                     r.setCalle(nuevosDatos.getCalle());
                     r.setTelefono(nuevosDatos.getTelefono());
                     r.setCif(nuevosDatos.getCif());
+                    r.setEmail(nuevosDatos.getEmail());
+                    r.setWeb(nuevosDatos.getWeb());
                     return restauranteRepository.save(r);
                 }).orElseThrow(() -> new RuntimeException("Restaurante no encontrado"));
     }

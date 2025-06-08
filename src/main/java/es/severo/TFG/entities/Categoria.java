@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "categorias")
 public class Categoria {
@@ -28,7 +27,17 @@ public class Categoria {
     @Column(name="imagen")
     private String imagen;
 
+
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private Set<Producto> productos = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", imagen='" + imagen + '\'' +
+                '}';
+    }
 }

@@ -10,5 +10,6 @@ import java.util.Set;
 public class IngredienteDTO {
     private String nombre;
     private String imagen;
+    private Boolean esAnadible;
     private Set<Long> alergenoIds;
 }

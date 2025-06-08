@@ -22,7 +22,6 @@ public class Especificacion {
 
     @ManyToOne
     @JoinColumn(name = "ingrediente_id", nullable = false)
-    @JsonIgnore
     private Ingrediente ingrediente;
 
     @ManyToOne

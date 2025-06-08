@@ -44,4 +44,10 @@ public class RestauranteController {
         service.deleteRestaurante(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/unico")
+    public ResponseEntity<Restaurante> getUnicoRestaurante() {
+        return ResponseEntity.ok(service.getAllRestaurantes().get(0));
+    }
+
 }

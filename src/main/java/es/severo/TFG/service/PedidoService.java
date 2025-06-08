@@ -2,6 +2,7 @@ package es.severo.TFG.service;
 
 import es.severo.TFG.entities.Pedido;
 import es.severo.TFG.entities.PedidoProducto;
+import es.severo.TFG.entities.Producto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +13,7 @@ public interface PedidoService {
     Optional<Pedido> getPedidoById(Long id);
     void deletePedido(Long id);
     Optional<Pedido> updatePedido(Long id, Pedido datos, Long mesaId);
+    List<Producto> getTopProductos();
+
+    boolean enviarPedido(Long id);
 }

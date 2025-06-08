@@ -1,57 +1,49 @@
 package es.severo.TFG.service;
 
-import es.severo.TFG.entities.Restaurante;
 import es.severo.TFG.entities.Usuario;
-import es.severo.TFG.repository.RestauranteRepository;
 import es.severo.TFG.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final RestauranteRepository restauranteRepository;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, RestauranteRepository restauranteRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.restauranteRepository = restauranteRepository;
     }
 
     @Override
-    public Usuario createUsuario(Usuario usuario, Long restauranteId) {
-        Restaurante restaurante = restauranteRepository.findById(restauranteId)
-                .orElseThrow(() -> new RuntimeException("Restaurante no encontrado"));
-        usuario.setRestaurante(restaurante);
-        return usuarioRepository.save(usuario);
-    }
-
-    @Override
-    public List<Usuario> getAllUsuarios() {
+    public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
     @Override
-    public Optional<Usuario> getUsuarioById(Long id) {
-        return usuarioRepository.findById(id);
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Usuario updateUsuario(Long id, Usuario nuevosDatos, Long restauranteId) {
-        return usuarioRepository.findById(id).map(usuario -> {
-            usuario.setNombre(nuevosDatos.getNombre());
-            usuario.setContrasena(nuevosDatos.getContrasena());
-            if (restauranteId != null) {
-                restauranteRepository.findById(restauranteId).ifPresent(usuario::setRestaurante);
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if (usuario != null && usuario.getRol().equalsIgnoreCase("administrador")) {
+            long administradores = countAdministradores();
+            if (administradores <= 1) {
+                throw new IllegalStateException("No se puede eliminar el último administrador.");
             }
-            return usuarioRepository.save(usuario);
-        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        }
+        usuarioRepository.deleteById(id);
     }
 
     @Override
-    public void deleteUsuario(Long id) {
-        usuarioRepository.deleteById(id);
+    public long countAdministradores() {
+        return usuarioRepository.countByRolIgnoreCase("administrador");
     }
 }

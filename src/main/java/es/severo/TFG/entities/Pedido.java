@@ -21,7 +21,6 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
     @Column(name = "fecha", nullable = false)
@@ -45,20 +44,19 @@ public class Pedido {
     @Column(name = "metodo_pago")
     private String metodoPago;
 
-    @Column(name = "ticket", nullable = false)
+    //Los tickets puieden ser tan sumamente largos que tengo que especificar el valor para que no sea un varhcar(255)
+    @Lob
+    @Column(name = "ticket", nullable = false, columnDefinition = "LONGTEXT")
     private String ticket;
 
     @ManyToOne
-    @JoinColumn(name = "mesa_id", nullable = false)
-    @JsonIgnore
+    @JoinColumn(name = "mesa_id")
     private Mesa mesa;
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    @JsonIgnore
     private Restaurante restaurante;
 
     @OneToMany(mappedBy = "pedido")
-    @JsonIgnore
     private Set<PedidoProducto> productos = new HashSet<>();
 }

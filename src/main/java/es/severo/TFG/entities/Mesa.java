@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "mesas")
 public class Mesa {
@@ -35,4 +34,13 @@ public class Mesa {
     @JsonIgnore
     private Set<Pedido> pedidos = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Mesa{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", numSitios=" + numSitios +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 }

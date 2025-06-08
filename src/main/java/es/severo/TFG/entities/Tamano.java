@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "tamanos")
 public class Tamano {
@@ -28,4 +27,12 @@ public class Tamano {
     @OneToMany(mappedBy = "tamano")
     @JsonIgnore
     private Set<Producto> productos = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Tamano{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                '}';
+    }
 }

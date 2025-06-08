@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PedidoProductoRepository extends JpaRepository<PedidoProducto, Long> {
-    List<PedidoProducto> findByPedidoId(Long pedidoId);
+
 }

@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -31,6 +30,9 @@ public class Producto {
     @Column(name="imagen")
     private String imagen;
 
+    @Column(name="es_editable", nullable = false)
+    private Boolean esEditable = true;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
@@ -43,7 +45,19 @@ public class Producto {
     @JsonIgnore
     private Set<ProductoIngrediente> ingredientes = new HashSet<>();
 
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     private Set<PedidoProducto> pedidos = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precioBase=" + precioBase +
+                ", imagen='" + imagen + '\'' +
+                ", categoria=" + categoria +
+                ", tamano=" + tamano +
+                '}';
+    }
 }

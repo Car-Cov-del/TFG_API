@@ -70,7 +70,7 @@ public class ProductoServiceImpl implements  ProductoService{
             productoExistente.setNombre(nuevosDatos.getNombre());
             productoExistente.setImagen(nuevosDatos.getImagen());
             productoExistente.setPrecioBase(nuevosDatos.getPrecioBase());
-
+            productoExistente.setEsEditable(nuevosDatos.getEsEditable());
             productoExistente.setTamano(opTamano.get());
 
             if (categoriaId != null && categoriaId > 0) {

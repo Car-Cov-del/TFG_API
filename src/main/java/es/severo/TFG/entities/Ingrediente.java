@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "ingredientes")
 public class Ingrediente {
@@ -28,6 +27,9 @@ public class Ingrediente {
     @Column(name="imagen")
     private String imagen;
 
+    @Column(name="es_anadible", nullable = false)
+    private Boolean esAnadible = true;
+
     @ManyToMany
     @JoinTable(
             name = "ingrediente_alergeno",
@@ -36,11 +38,21 @@ public class Ingrediente {
     )
     private Set<Alergeno> alergenos = new HashSet<>();
 
-    @OneToMany(mappedBy = "ingrediente")
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<ProductoIngrediente> productos = new HashSet<>();
 
-    @OneToMany(mappedBy = "ingrediente")
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Especificacion> especificaciones = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Ingrediente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", imagen='" + imagen + '\'' +
+                ", alergenos=" + alergenos +
+                '}';
+    }
 }

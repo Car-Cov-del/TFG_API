@@ -1,5 +1,6 @@
 package es.severo.TFG.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,5 +44,6 @@ public class Restaurante {
     private Set<Usuario> usuarios = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante")
+    @JsonIgnore
     private Set<Pedido> pedidos = new HashSet<>();
 }
