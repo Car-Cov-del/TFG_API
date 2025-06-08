@@ -34,4 +34,11 @@ public class Alergeno {
     @ManyToMany(mappedBy = "alergenos")
     @JsonIgnore
     private Set<Ingrediente> ingredientes = new HashSet<>();
+
+    public Alergeno(long l, String descripcion, String url, String nombre) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.nombre = nombre;
+    }
 }

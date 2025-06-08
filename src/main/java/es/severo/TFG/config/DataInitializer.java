@@ -1,16 +1,13 @@
 package es.severo.TFG.config;
 
-import es.severo.TFG.entities.Restaurante;
-import es.severo.TFG.entities.Tamano;
-import es.severo.TFG.entities.Usuario;
-import es.severo.TFG.repository.RestauranteRepository;
-import es.severo.TFG.repository.TamanoRepository;
-import es.severo.TFG.repository.UsuarioRepository;
+import es.severo.TFG.entities.*;
+import es.severo.TFG.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class DataInitializer {
@@ -18,7 +15,9 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner initData(RestauranteRepository restauranteRepo,
                                       UsuarioRepository usuarioRepo,
-                                      TamanoRepository tamanoRepo) {
+                                      TamanoRepository tamanoRepo,
+                                      CategoriaRepository categoriaRepo,
+                                      AlergenoRepository alergenoRepo) {
         return args -> {
 
             // Crear restaurante si no existe
@@ -58,6 +57,37 @@ public class DataInitializer {
                 grande.setNombre("Familiar");
 
                 tamanoRepo.saveAll(Arrays.asList(pequeno, mediano, grande, familiar));
+            }
+
+            // Crear categoría "Ninguna" si no existe
+            if (!categoriaRepo.existsByNombre("Ninguna")) {
+                Categoria categoria = new Categoria();
+                categoria.setNombre("Ninguna");
+                categoria.setImagen(null);
+
+                categoriaRepo.save(categoria);
+            }
+
+            //Crear los alergenos
+            if (alergenoRepo.count() == 0) {
+                List<Alergeno> alergenos = List.of(
+                        new Alergeno(1L, "Cereales con gluten", "https://images.icon-icons.com/2940/PNG/512/gluten_allergen_food_allergens_icon_183726.png", "Gluten"),
+                        new Alergeno(2L, "Crustáceos y productos a base de crustáceos", "https://images.icon-icons.com/2940/PNG/512/crustacean_allergen_food_allergens_icon_183733.png", "Crustáceos"),
+                        new Alergeno(3L, "Huevos y productos derivados", "https://images.icon-icons.com/2940/PNG/512/egg_allergen_food_allergens_icon_183730.png", "Huevos"),
+                        new Alergeno(4L, "Pescado y productos a base de pescados", "https://images.icon-icons.com/2940/PNG/512/fish_allergen_food_allergens_icon_183728.png", "Pescado"),
+                        new Alergeno(5L, "Cacahuetes, productos a base de cacahuetes y frutos secos", "https://images.icon-icons.com/2940/PNG/512/peanuts_allergen_food_allergens_icon_183731.png", "Cacahuetes"),
+                        new Alergeno(6L, "Soja y productos a base de soja", "https://images.icon-icons.com/2940/PNG/512/soy_allergen_food_allergens_icon_183721.png", "Soja"),
+                        new Alergeno(7L, "Leche y sus derivados (incluida la lactosa)", "https://images.icon-icons.com/2940/PNG/512/milk_allergen_food_allergens_icon_183724.png", "Lácteos"),
+                        new Alergeno(8L, "Frutos de cáscara y productos derivados", "https://images.icon-icons.com/2940/PNG/512/nuts_allergen_food_allergens_icon_183722.png", "Frutos con cáscara"),
+                        new Alergeno(9L, "Apio y productos derivados", "https://images.icon-icons.com/2940/PNG/512/celery_allergen_food_allergens_icon_183723.png", "Apio"),
+                        new Alergeno(10L, "Mostaza y productos a base de mostaza", "https://images.icon-icons.com/2940/PNG/512/mustard_allergen_food_allergens_icon_183732.png", "Mostaza"),
+                        new Alergeno(11L, "Granos o semillas de sésamo y productos a base de sésamo", "https://images.icon-icons.com/2940/PNG/512/sesame_allergen_food_allergens_icon_183729.png", "Sésamo"),
+                        new Alergeno(12L, "Dióxido de azufre y sulfitos", "https://images.icon-icons.com/2940/PNG/512/sulfites_allergen_food_allergens_icon_183725.png", "Sulfitos"),
+                        new Alergeno(13L, "Altramuces y productos a base de altramuces", "https://images.icon-icons.com/2940/PNG/512/lupins_allergen_food_allergens_icon_183720.png", "Altramuces"),
+                        new Alergeno(14L, "Moluscos y crustáceos y productos a base de estos", "https://images.icon-icons.com/2940/PNG/512/shellfish_allergen_food_allergens_icon_183727.png", "Moluscos")
+                );
+
+                alergenoRepo.saveAll(alergenos);
             }
         };
     }
