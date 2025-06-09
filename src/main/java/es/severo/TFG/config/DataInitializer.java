@@ -54,7 +54,7 @@ public class DataInitializer {
                 grande.setNombre("Grande");
 
                 Tamano familiar = new Tamano();
-                grande.setNombre("Familiar");
+                familiar.setNombre("Familiar");
 
                 tamanoRepo.saveAll(Arrays.asList(pequeno, mediano, grande, familiar));
             }
@@ -71,20 +71,20 @@ public class DataInitializer {
             //Crear los alergenos
             if (alergenoRepo.count() == 0) {
                 List<Alergeno> alergenos = List.of(
-                        new Alergeno(1L, "Cereales con gluten", "https://images.icon-icons.com/2940/PNG/512/gluten_allergen_food_allergens_icon_183726.png", "Gluten"),
-                        new Alergeno(2L, "Crustáceos y productos a base de crustáceos", "https://images.icon-icons.com/2940/PNG/512/crustacean_allergen_food_allergens_icon_183733.png", "Crustáceos"),
-                        new Alergeno(3L, "Huevos y productos derivados", "https://images.icon-icons.com/2940/PNG/512/egg_allergen_food_allergens_icon_183730.png", "Huevos"),
-                        new Alergeno(4L, "Pescado y productos a base de pescados", "https://images.icon-icons.com/2940/PNG/512/fish_allergen_food_allergens_icon_183728.png", "Pescado"),
-                        new Alergeno(5L, "Cacahuetes, productos a base de cacahuetes y frutos secos", "https://images.icon-icons.com/2940/PNG/512/peanuts_allergen_food_allergens_icon_183731.png", "Cacahuetes"),
-                        new Alergeno(6L, "Soja y productos a base de soja", "https://images.icon-icons.com/2940/PNG/512/soy_allergen_food_allergens_icon_183721.png", "Soja"),
-                        new Alergeno(7L, "Leche y sus derivados (incluida la lactosa)", "https://images.icon-icons.com/2940/PNG/512/milk_allergen_food_allergens_icon_183724.png", "Lácteos"),
-                        new Alergeno(8L, "Frutos de cáscara y productos derivados", "https://images.icon-icons.com/2940/PNG/512/nuts_allergen_food_allergens_icon_183722.png", "Frutos con cáscara"),
-                        new Alergeno(9L, "Apio y productos derivados", "https://images.icon-icons.com/2940/PNG/512/celery_allergen_food_allergens_icon_183723.png", "Apio"),
-                        new Alergeno(10L, "Mostaza y productos a base de mostaza", "https://images.icon-icons.com/2940/PNG/512/mustard_allergen_food_allergens_icon_183732.png", "Mostaza"),
-                        new Alergeno(11L, "Granos o semillas de sésamo y productos a base de sésamo", "https://images.icon-icons.com/2940/PNG/512/sesame_allergen_food_allergens_icon_183729.png", "Sésamo"),
-                        new Alergeno(12L, "Dióxido de azufre y sulfitos", "https://images.icon-icons.com/2940/PNG/512/sulfites_allergen_food_allergens_icon_183725.png", "Sulfitos"),
-                        new Alergeno(13L, "Altramuces y productos a base de altramuces", "https://images.icon-icons.com/2940/PNG/512/lupins_allergen_food_allergens_icon_183720.png", "Altramuces"),
-                        new Alergeno(14L, "Moluscos y crustáceos y productos a base de estos", "https://images.icon-icons.com/2940/PNG/512/shellfish_allergen_food_allergens_icon_183727.png", "Moluscos")
+                        new Alergeno("Cereales con gluten", "https://images.icon-icons.com/2940/PNG/512/gluten_allergen_food_allergens_icon_183726.png", "Gluten"),
+                        new Alergeno("Crustáceos y productos a base de crustáceos", "https://images.icon-icons.com/2940/PNG/512/crustacean_allergen_food_allergens_icon_183733.png", "Crustáceos"),
+                        new Alergeno("Huevos y productos derivados", "https://images.icon-icons.com/2940/PNG/512/egg_allergen_food_allergens_icon_183730.png", "Huevos"),
+                        new Alergeno("Pescado y productos a base de pescados", "https://images.icon-icons.com/2940/PNG/512/fish_allergen_food_allergens_icon_183728.png", "Pescado"),
+                        new Alergeno("Cacahuetes, productos a base de cacahuetes y frutos secos", "https://images.icon-icons.com/2940/PNG/512/peanuts_allergen_food_allergens_icon_183731.png", "Cacahuetes"),
+                        new Alergeno("Soja y productos a base de soja", "https://images.icon-icons.com/2940/PNG/512/soy_allergen_food_allergens_icon_183721.png", "Soja"),
+                        new Alergeno("Leche y sus derivados (incluida la lactosa)", "https://images.icon-icons.com/2940/PNG/512/milk_allergen_food_allergens_icon_183724.png", "Lácteos"),
+                        new Alergeno("Frutos de cáscara y productos derivados", "https://images.icon-icons.com/2940/PNG/512/nuts_allergen_food_allergens_icon_183722.png", "Frutos con cáscara"),
+                        new Alergeno("Apio y productos derivados", "https://images.icon-icons.com/2940/PNG/512/celery_allergen_food_allergens_icon_183723.png", "Apio"),
+                        new Alergeno("Mostaza y productos a base de mostaza", "https://images.icon-icons.com/2940/PNG/512/mustard_allergen_food_allergens_icon_183732.png", "Mostaza"),
+                        new Alergeno("Granos o semillas de sésamo y productos a base de sésamo", "https://images.icon-icons.com/2940/PNG/512/sesame_allergen_food_allergens_icon_183729.png", "Sésamo"),
+                        new Alergeno("Dióxido de azufre y sulfitos", "https://images.icon-icons.com/2940/PNG/512/sulfites_allergen_food_allergens_icon_183725.png", "Sulfitos"),
+                        new Alergeno("Altramuces y productos a base de altramuces", "https://images.icon-icons.com/2940/PNG/512/lupins_allergen_food_allergens_icon_183720.png", "Altramuces"),
+                        new Alergeno("Moluscos y crustáceos y productos a base de estos", "https://images.icon-icons.com/2940/PNG/512/shellfish_allergen_food_allergens_icon_183727.png", "Moluscos")
                 );
 
                 alergenoRepo.saveAll(alergenos);

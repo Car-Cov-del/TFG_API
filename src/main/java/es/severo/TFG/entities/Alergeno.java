@@ -35,10 +35,9 @@ public class Alergeno {
     @JsonIgnore
     private Set<Ingrediente> ingredientes = new HashSet<>();
 
-    public Alergeno(long l, String descripcion, String url, String nombre) {
-        this.id = id;
+    public Alergeno(String descripcion, String url, String nombre) {
         this.descripcion = descripcion;
-        this.imagen = imagen;
+        this.imagen = url;
         this.nombre = nombre;
     }
 }
