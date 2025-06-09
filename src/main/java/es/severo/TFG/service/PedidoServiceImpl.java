@@ -114,38 +114,58 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private String generarTicket(Pedido pedido) {
-
-        String fechaStr = pedido.getFecha().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Restaurante r = pedido.getRestaurante();
+        String fecha = pedido.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         String numero = String.format("%05d", pedido.getNumeroPedidoDelDia());
 
         StringBuilder ticketBuilder = new StringBuilder();
-        ticketBuilder.append("TICKET_").append(fechaStr).append("_").append(numero).append("\n");
+
+        // DATOS DEL RESTAURANTE
+        ticketBuilder.append("========= ").append(r.getNombre()).append(" =========\n");
+        ticketBuilder.append(r.getCalle()).append("\n");
+        ticketBuilder.append("Tel: ").append(r.getTelefono()).append("\n");
+        ticketBuilder.append("Web: ").append(r.getWeb()).append("\n");
+
+        ticketBuilder.append("\n----------------------------\n");
+
+        // NUMERO Y FECHA
+        ticketBuilder.append("PEDIDO N° ").append(numero).append("\n");
+        ticketBuilder.append("Fecha: ").append(fecha).append("\n");
+
+        ticketBuilder.append("----------------------------\n");
+
+        // PRODUCTOS
         ticketBuilder.append("Productos:\n");
+        for (PedidoProducto pp : pedido.getProductos()) {
+            ticketBuilder.append("- ").append(pp.getProducto().getNombre())
+                    .append(" x").append(pp.getCantidad())
+                    .append(" (").append(pp.getProducto().getPrecioBase()).append("€ c/u)\n");
 
-        if (pedido.getProductos() != null) {
-            for (PedidoProducto pp : pedido.getProductos()) {
-                ticketBuilder.append("- ").append(pp.getProducto().getNombre())
-                        .append(" x").append(pp.getCantidad())
-                        .append(" (Precio base: ").append(pp.getProducto().getPrecioBase()).append(")\n");
-
-                if (pp.getEspecificaciones() != null && !pp.getEspecificaciones().isEmpty()) {
-                    ticketBuilder.append("  Especificaciones:\n");
-                    for (Especificacion e : pp.getEspecificaciones()) {
-                        ticketBuilder.append("   * ").append(e.getAccion())
-                                .append(" ").append(e.getIngrediente().getNombre())
-                                .append(" (Extra: ").append(e.getPrecioExtra()).append(")\n");
-                    }
+            if (pp.getEspecificaciones() != null && !pp.getEspecificaciones().isEmpty()) {
+                ticketBuilder.append("  Especificaciones:\n");
+                for (Especificacion e : pp.getEspecificaciones()) {
+                    ticketBuilder.append("   * ").append(e.getAccion())
+                            .append(" ").append(e.getIngrediente().getNombre())
+                            .append(" (").append(e.getPrecioExtra()).append("€)\n");
                 }
             }
         }
 
-        ticketBuilder.append("Total: ").append(pedido.getPrecioTotal()).append("\n");
-        ticketBuilder.append("Pagado: ").append(pedido.getPrecioPagado()).append("\n");
+        ticketBuilder.append("----------------------------\n");
+
+        // PRECIOS
+        ticketBuilder.append(String.format("Total: %.2f €\n", pedido.getPrecioTotal()));
+        ticketBuilder.append(String.format("Pagado: %.2f € (%s)\n",
+                pedido.getPrecioPagado(),
+                pedido.getMetodoPago() != null ? pedido.getMetodoPago() : "Desconocido"));
+
+        ticketBuilder.append("----------------------------\n");
+
+        // MENSAJE FINAL
+        ticketBuilder.append("-----¡Gracias por su visita!-----\n");
 
         return ticketBuilder.toString();
     }
-
-
 
     @Override
     public List<Pedido> getAllPedidos() {

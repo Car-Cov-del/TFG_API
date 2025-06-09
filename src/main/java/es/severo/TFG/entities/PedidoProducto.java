@@ -35,7 +35,7 @@ public class PedidoProducto {
     @Column(name="cantidad", nullable = false)
     private Integer cantidad;
 
-    @OneToMany(mappedBy = "pedidoProducto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedidoProducto", orphanRemoval = true)
     private Set<Especificacion> especificaciones = new HashSet<>();
 
 }
