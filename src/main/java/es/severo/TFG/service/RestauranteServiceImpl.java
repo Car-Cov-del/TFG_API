@@ -49,4 +49,10 @@ public class RestauranteServiceImpl implements RestauranteService {
     public void deleteRestaurante(Long id) {
         restauranteRepository.deleteById(id);
     }
+
+    @Override
+    public Restaurante findById(Long id) {
+        return restauranteRepository.findById(id).orElse(null);
+    }
+
 }

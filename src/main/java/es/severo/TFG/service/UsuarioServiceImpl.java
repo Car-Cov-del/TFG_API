@@ -31,6 +31,21 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario update(Long id, Usuario nuevosDatos) {
+        Usuario existente = usuarioRepository.findById(id).orElse(null);
+        if (existente == null) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+
+        existente.setNombre(nuevosDatos.getNombre());
+        existente.setContrasena(nuevosDatos.getContrasena());
+        existente.setRol(nuevosDatos.getRol());
+
+        return usuarioRepository.save(existente);
+    }
+
+
+    @Override
     public void deleteById(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
         if (usuario != null && usuario.getRol().equalsIgnoreCase("administrador")) {

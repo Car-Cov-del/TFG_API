@@ -11,4 +11,6 @@ public interface RestauranteService {
     Optional<Restaurante> getRestauranteById(Long id);
     Restaurante updateRestaurante(Long id, Restaurante restaurante);
     void deleteRestaurante(Long id);
+    Restaurante findById(Long id);
+
 }

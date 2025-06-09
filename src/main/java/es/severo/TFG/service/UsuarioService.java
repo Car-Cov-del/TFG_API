@@ -10,6 +10,8 @@ public interface UsuarioService {
     Usuario findById(Long id);
     Usuario save(Usuario usuario);
     void deleteById(Long id);
+    Usuario update(Long id, Usuario usuario);
+
     long countAdministradores();
 }
 
