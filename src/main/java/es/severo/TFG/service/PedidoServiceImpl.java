@@ -200,7 +200,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<Producto> getTopProductos() {
-        List<Producto> top =  pedidoRepository.findTopProductos(PageRequest.of(0, 12));
+        List<Producto> top =  pedidoRepository.findTopProductos(PageRequest.of(0, 28));
         System.out.println("TOP VENTAS:");
         System.out.println(top);
         return top;
